@@ -578,6 +578,8 @@ h6 {
       font-weight: 400;
       font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Microsoft Yahei", "Microsoft Jhenghei", sans-serif;
       margin-top: 1.2em; }
+    .post .post-content .excerpt {
+      display: none; }
     .post .post-content .headerlink:hover {
       border-bottom: 0; }
     .post .post-content .headerlink::before {
