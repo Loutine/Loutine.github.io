@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="emacs构建前端开发环境并添加firefox-dev支持"/>
+
+
+
+
+  <meta name="keywords" content="emacs,前端," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Anti-Bone-Chick">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2020/03/29/emacs-web/"/>
+
+
+<meta name="description" content="# 起因 最近对javascript的函数式语法产生了兴趣，决定学习一下   学习js难免要和前端打交道，目前好用的前端编辑器有很多，sublime，vsc，atom，vim都是很不错的选择，但是对于一个常年使用emacs的用户来说，总觉得小拇指不有点不适应，花了半天的时间参考了一些配置，做了一个有基本功能的开发环境。   # HTML与CSS--web mode   html文件和css的配置">
+<meta property="og:type" content="article">
+<meta property="og:title" content="emacs构建前端开发环境并添加firefox-dev支持">
+<meta property="og:url" content="http://yoursite.com/2020/03/29/emacs-web/index.html">
+<meta property="og:site_name" content="Anti-Bone-Chick">
+<meta property="og:description" content="# 起因 最近对javascript的函数式语法产生了兴趣，决定学习一下   学习js难免要和前端打交道，目前好用的前端编辑器有很多，sublime，vsc，atom，vim都是很不错的选择，但是对于一个常年使用emacs的用户来说，总觉得小拇指不有点不适应，花了半天的时间参考了一些配置，做了一个有基本功能的开发环境。   # HTML与CSS--web mode   html文件和css的配置">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://yoursite.com/.com//03/29/emacs-web/a.png">
+<meta property="og:image" content="http://yoursite.com/.com//a.png">
+<meta property="article:published_time" content="2020-03-29T11:34:28.000Z">
+<meta property="article:modified_time" content="2020-03-29T11:47:25.152Z">
+<meta property="article:author" content="Loutine">
+<meta property="article:tag" content="emacs">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/.com//03/29/emacs-web/a.png">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: false
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> emacs构建前端开发环境并添加firefox-dev支持 - Anti-Bone-Chick </title>
+  <meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Anti-Bone-Chick" type="application/atom+xml">
+</head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">
+	<img width=40 height=40 src="/favicon.ico"/>
+	Anti-Bone-Chick
+	</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/atom.xml">
+                            
+                            
+                                RSS
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          emacs构建前端开发环境并添加firefox-dev支持
+        
+      </h1>
+
+      <time class="post-time">
+          Mar 29 2020
+      </time>
+    </header>
+
+
+
+    
+	    
+  <div class="toc-container">
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#impatient-mode-的问题"><span class="toc-text">impatient mode 的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更好的选择–browser-sync"><span class="toc-text">更好的选择–browser-sync</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lsp-补全"><span class="toc-text">lsp-补全</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#添加firefox-developer-edition支持，并设置为默认浏览器"><span class="toc-text">添加firefox-developer-edition支持，并设置为默认浏览器</span></a>
+  </div> 
+	
+            <div class="post-content">
+            <img src="/.com//03/29/emacs-web/a.png">
+# 起因
+最近对javascript的函数式语法产生了兴趣，决定学习一下  
+学习js难免要和前端打交道，目前好用的前端编辑器有很多，sublime，vsc，atom，vim都是很不错的选择，但是对于一个常年使用emacs的用户来说，总觉得小拇指不有点不适应，花了半天的时间参考了一些配置，做了一个有基本功能的开发环境。  
+# HTML与CSS--web mode
+  html文件和css的配置并不复杂，并且有很好的工具，web-mode基本上就是开箱即用很方便，而且支持目前大部分主流的模板文件还有css格式，相关配置如下，力求最小化配置，如果有需要可以阅读官网的document进行一些个性化配置。[web-mode](http://web-mode.org/)
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">(use-package web-mode</span><br><span class="line">  :ensure t</span><br><span class="line">  :mode &quot;\\.[px]?html?\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.\\(?:tpl\\|blade\\)\\(?:\\.php\\)?\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.erb\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.eex\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.jsp\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.as[cp]x\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.hbs\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.mustache\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.svelte\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.vue\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.twig\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.jinja\\&#39;&quot;</span><br><span class="line">  :mode &quot;wp-content&#x2F;themes&#x2F;.+&#x2F;.+\\.php\\&#39;&quot;</span><br><span class="line">  :mode &quot;templates&#x2F;.+\\.php\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.tsx\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.swig\\&#39;&quot;</span><br><span class="line">  :config</span><br><span class="line">  (setq web-mode-markup-indent-offset 2</span><br><span class="line">	web-mode-css-indent-offset 2</span><br><span class="line">	web-mode-code-indent-offset 2</span><br><span class="line">	web-mode-enable-current-element-highlight t;对光标所在的元素进行高亮提示</span><br><span class="line">	web-mode-enable-css-colorization t);css色彩显示</span><br><span class="line">	)</span><br></pre></td></tr></table></figure>
+如果你需要自动补全可以使用company-web,虽然我觉得并没有什么必要
+# javascript--补全与设置
+## skewer踩坑
+  最早在google上搜索的时候，推荐给我的是skewer-mode，这个插件看起来十分诱人，但其实有着很大的缺陷
+  1. 已经维护较少
+  最近的更新是在8个月以前，对于前端技术来说一个已经很不活跃了，相关项目下的issue也没有人解决。
+  2. 奇怪的bug
+  其卖点live develop功能在尝试后发现有重大缺陷，html文件不能预览，甚至连基本的tag都无法执行。
+  3. 过于臃肿
+  这个问题已经是一个老问题了，社区的反映也很多，许多emacs配置已经放弃了这个包。  
+
+<h2 id="impatient-mode-的问题"><a href="#impatient-mode-的问题" class="headerlink" title="impatient mode 的问题"></a>impatient mode 的问题</h2><p>  skewer-mode的作者有另一个包用于html预览–impatient-mode<br>  这个mode同样很诱人，能够直接实时预览你的html文件，甚至不用保存，十分诱人性能也好但是有一个问题，html中如果有js文件包含，当js文件修改的时候并不能刷新页面，我是个懒人，这么费尽的事情我当然不愿意做，所以才有下面的内容。  </p>
+<h2 id="更好的选择–browser-sync"><a href="#更好的选择–browser-sync" class="headerlink" title="更好的选择–browser-sync"></a>更好的选择–browser-sync</h2><p>  实际上在我一番探索后，emacs内部并没有很好的解决方案，几次搜索之后看上了这个有趣的项目<a href="http://www.browsersync.cn/" target="_blank" rel="noopener">browser-sync</a>尝试之后发现这个包的确好用。安装过程也很简单。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g browser-sync</span><br></pre></td></tr></table></figure>
+<p>安装之后在命令行下启动就行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">browser-sync start --server --files <span class="string">"css/*.css, *.html"</span></span><br></pre></td></tr></table></figure>
+<p>这个命令会启动一个服务器监听css文件夹下*.css文件和 当前文件夹下 *.html的变化并打开浏览器预览，如果有变化会刷新浏览器。<br>当然我们希望所有的文件都能被监听。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">browser-sync start --server --files <span class="string">"**/*.css, **/*.html, **/*.js"</span></span><br></pre></td></tr></table></figure>
+<p>这个命令可以监听当前文件夹下所有的文件包括文件夹中的，这样文件只要有修改，浏览器就会马上刷新。我们只需要在命令行中调用这个命令就行了，但是这样有点不方便，我们希望编辑器中能直接使用这个命令，对于emacser来说，添加一个函数就行了～</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(defun browser-sync ()</span><br><span class="line">  (interactive)</span><br><span class="line">  (async-shell-command &quot;browser-sync start --server --files \&quot;**&#x2F;*.css, **&#x2F;*.html,**&#x2F;*.js\&quot;&quot;))</span><br></pre></td></tr></table></figure>
+<pre><code>好了，每次需要预览的时候`M-x browser-sync RET`就好了。  </code></pre><h2 id="lsp-补全"><a href="#lsp-补全" class="headerlink" title="lsp-补全"></a>lsp-补全</h2><pre><code>关于emacs的补全我就不多费口舌了，我使用的是company+lsp（巨硬NB！）  
+使用lsp进行补全需要下载相关的language-server，我使用的是typescript的language-server。安装指令如下</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g typescript-language-server; npm i -g typescript</span><br></pre></td></tr></table></figure>
+<pre><code>lsp和company的配置我就不赘述了，有很多的介绍。</code></pre><h1 id="添加firefox-developer-edition支持，并设置为默认浏览器"><a href="#添加firefox-developer-edition支持，并设置为默认浏览器" class="headerlink" title="添加firefox-developer-edition支持，并设置为默认浏览器"></a>添加firefox-developer-edition支持，并设置为默认浏览器</h1><pre><code>不得不说firefox的开发者版本真香，个人觉得比chromium还好用，不过emacs中并不直接支持使用，有如下两个方案  </code></pre><ol>
+<li>设置系统的默认浏览器为firefox-developer-edition</li>
+<li>修改emacs的默认配置 </li>
+</ol>
+<p>emacs中配置默认的浏览器实际上是设置一个variable,<code>browse-url-browser-function</code>直接调用一个函数用于启动浏览器想要修改他也不难</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">(setq browse-url-browser-function &#39;values)</span><br><span class="line">;; values 有几个可选值</span><br><span class="line">;; browse-url-mozilla                 Mozilla     Don&#39;t know</span><br><span class="line">;; browse-url-firefox                 Firefox     Don&#39;t know (tried with 1.0.1)</span><br><span class="line">;; browse-url-chrome                  Chrome      47.0.2526.111</span><br><span class="line">;; browse-url-chromium                Chromium    3.0</span><br><span class="line">;; browse-url-epiphany                Epiphany    Don&#39;t know</span><br><span class="line">;; browse-url-conkeror                Conkeror    Don&#39;t know</span><br><span class="line">;; browse-url-w3                      w3          0</span><br><span class="line">;; browse-url-text-*	              Any text browser     0</span><br><span class="line">;; browse-url-generic                 arbitrary</span><br><span class="line">;; browse-url-default-windows-browser MS-Windows browser</span><br><span class="line">;; browse-url-default-macosx-browser  macOS browser</span><br><span class="line">;; browse-url-xdg-open                freedesktop.org xdg-open</span><br><span class="line">;; browse-url-kde                     KDE konqueror (kfm)</span><br><span class="line">;; browse-url-elinks                  Elinks      Don&#39;t know (tried with 0.12.GIT)</span><br></pre></td></tr></table></figure>
+<pre><code>设置好之后使用`browse-url-***`相关的命令便可以用设置的浏览器打开网站或者文件，但是目前来看没有专门为firefox-dev设置一个函数，我设置为browse-url-mozilla后也没有用firefox-dev打开，chromium都有。。。
+于是决定自己写一个函数来用稍微修改了一下brow-url-firefox并且copy到了我的配置文件中
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">(defcustom browse-url-firefox-dev-program</span><br><span class="line">  (let ((candidates &#39;(&quot;icecat&quot; &quot;iceweasel&quot; &quot;firefox-developer-edition&quot;)))</span><br><span class="line">    (while (and candidates (not (executable-find (car candidates))))</span><br><span class="line">      (setq candidates (cdr candidates)))</span><br><span class="line">    (or (car candidates) &quot;firefox-developer-edition&quot;))</span><br><span class="line">  &quot;The name by which to invoke Firefox-dev or a variant of it.&quot;</span><br><span class="line">  :type &#39;string)</span><br><span class="line"></span><br><span class="line">(defun browse-url-firefox-dev (url &amp;optional new-window)</span><br><span class="line">  (interactive (browse-url-interactive-arg &quot;URL: &quot;))</span><br><span class="line">  (setq url (browse-url-encode-url url))</span><br><span class="line">  (let* ((process-environment (browse-url-process-environment)))</span><br><span class="line">    (apply &#39;start-process</span><br><span class="line">           (concat &quot;firefox-developer-edition &quot; url) nil</span><br><span class="line">           browse-url-firefox-dev-program</span><br><span class="line">           (append</span><br><span class="line">            browse-url-firefox-arguments</span><br><span class="line">            (if (browse-url-maybe-new-window new-window)</span><br><span class="line">		(if browse-url-firefox-new-window-is-tab</span><br><span class="line">		    &#39;(&quot;-new-tab&quot;)</span><br><span class="line">		  &#39;(&quot;-new-window&quot;)))</span><br><span class="line">            (list url)))))</span><br></pre></td></tr></table></figure></code></pre><p>这样就大功告成了！<br>Happy Hacking！  </p>
+<p><img src="/.com//a.png" alt></p>
+
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/emacs/">emacs</a>
+		  
+			<a href="/tags/%E5%89%8D%E7%AB%AF/">前端</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2020/03/27/Hello_World/">
+        <span class="next-text nav-default">Hello World!</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+    2020
+    <span class="footer-author">Loutine.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear" target="_blank" rel="noopener">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
