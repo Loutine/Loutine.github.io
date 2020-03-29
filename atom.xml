@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Anti-Bone-Chick</title>
+  
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2020-03-29T04:13:14.754Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Loutine</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>emacs构建前端开发环境并添加firefox-dev支持</title>
+    <link href="http://yoursite.com/2020/03/28/add-firefox-dev/"/>
+    <id>http://yoursite.com/2020/03/28/add-firefox-dev/</id>
+    <published>2020-03-28T11:21:37.000Z</published>
+    <updated>2020-03-29T04:13:14.754Z</updated>
+    
+    <content type="html"><![CDATA[<p>最近对javascript的函数式语法产生了兴趣，决定学习一下<br>学习js难免要和前端打交道，目前好用的前端编辑器有很多，sublime，vsc，atom，vim都是很不错的选择，但是对于一个常年使用emacs的用户来说，总觉得小拇指不有点不适应，花了半天的时间参考了一些配置，做了一个有基本功能的开发环境。  </p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;最近对javascript的函数式语法产生了兴趣，决定学习一下&lt;br&gt;学习js难免要和前端打交道，目前好用的前端编辑器有很多，sublime，vsc，atom，vim都是很不错的选择，但是对于一个常年使用emacs的用户来说，总觉得小拇指不有点不适应，花了半天的时间参考了一
+      
+    
+    </summary>
+    
+    
+    
+      <category term="emacs" scheme="http://yoursite.com/tags/emacs/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World!</title>
+    <link href="http://yoursite.com/2020/03/27/Hello_World/"/>
+    <id>http://yoursite.com/2020/03/27/Hello_World/</id>
+    <published>2020-03-27T11:52:32.317Z</published>
+    <updated>2020-03-27T12:01:29.178Z</updated>
+    
+    <summary type="html">
+    
+      “世界新生伊始，许多事物还没有名字，提到的时候尚需用手指指点点。”
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+</feed>
