@@ -42,19 +42,21 @@
 <meta property="og:site_name" content="Anti-Bone-Chick">
 <meta property="og:description" content="起因最近对javascript的函数式语法产生了兴趣，决定学习一下学习js难免要和前端打交道，目前好用的前端编辑器有很多，sublime，vsc，atom，vim都是很不错的选择，但是对于一个常年使用emacs的用户来说，总觉得小拇指不有点不适应，花了半天的时间参考了一些配置，做了一个有基本功能的开发环境。   HTML与CSS–web mode  html文件和css的配置并不复杂，并且有很好的">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://yoursite.com/.com//a.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/29/emacs-web/a.png">
 <meta property="article:published_time" content="2020-03-29T11:34:28.000Z">
-<meta property="article:modified_time" content="2020-03-29T11:59:26.586Z">
+<meta property="article:modified_time" content="2020-03-29T12:48:33.129Z">
 <meta property="article:author" content="Loutine">
 <meta property="article:tag" content="emacs">
 <meta property="article:tag" content="前端">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/.com//a.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/29/emacs-web/a.png">
 
 
 <link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
 <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
 
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
 
 
 
@@ -62,7 +64,7 @@
 <script type="text/javascript">
   var themeConfig = {
     fancybox: {
-      enable: false
+      enable: true
     },
   };
 </script>
@@ -180,7 +182,8 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">(setq browse-url-browser-function &#39;values)</span><br><span class="line">;; values 有几个可选值</span><br><span class="line">;; browse-url-mozilla                 Mozilla     Don&#39;t know</span><br><span class="line">;; browse-url-firefox                 Firefox     Don&#39;t know (tried with 1.0.1)</span><br><span class="line">;; browse-url-chrome                  Chrome      47.0.2526.111</span><br><span class="line">;; browse-url-chromium                Chromium    3.0</span><br><span class="line">;; browse-url-epiphany                Epiphany    Don&#39;t know</span><br><span class="line">;; browse-url-conkeror                Conkeror    Don&#39;t know</span><br><span class="line">;; browse-url-w3                      w3          0</span><br><span class="line">;; browse-url-text-*	              Any text browser     0</span><br><span class="line">;; browse-url-generic                 arbitrary</span><br><span class="line">;; browse-url-default-windows-browser MS-Windows browser</span><br><span class="line">;; browse-url-default-macosx-browser  macOS browser</span><br><span class="line">;; browse-url-xdg-open                freedesktop.org xdg-open</span><br><span class="line">;; browse-url-kde                     KDE konqueror (kfm)</span><br><span class="line">;; browse-url-elinks                  Elinks      Don&#39;t know (tried with 0.12.GIT)</span><br></pre></td></tr></table></figure>
 
 <p>设置好之后使用<code>browse-url-***</code>相关的命令便可以用设置的浏览器打开网站或者文件，但是目前来看没有专门为firefox-dev设置一个函数，我设置为browse-url-mozilla后也没有用firefox-dev打开，chromium都有。。。<br>    于是决定自己写一个函数来用稍微修改了一下brow-url-firefox并且copy到了我的配置文件中  </p>
-<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">(defcustom browse-url-firefox-dev-program</span><br><span class="line">  (let ((candidates &#39;(&quot;icecat&quot; &quot;iceweasel&quot; &quot;firefox-developer-edition&quot;)))</span><br><span class="line">    (while (and candidates (not (executable-find (car candidates))))</span><br><span class="line">      (setq candidates (cdr candidates)))</span><br><span class="line">    (or (car candidates) &quot;firefox-developer-edition&quot;))</span><br><span class="line">  &quot;The name by which to invoke Firefox-dev or a variant of it.&quot;</span><br><span class="line">  :type &#39;string)</span><br><span class="line"></span><br><span class="line">(defun browse-url-firefox-dev (url &amp;optional new-window)</span><br><span class="line">  (interactive (browse-url-interactive-arg &quot;URL: &quot;))</span><br><span class="line">  (setq url (browse-url-encode-url url))</span><br><span class="line">  (let* ((process-environment (browse-url-process-environment)))</span><br><span class="line">    (apply &#39;start-process</span><br><span class="line">           (concat &quot;firefox-developer-edition &quot; url) nil</span><br><span class="line">           browse-url-firefox-dev-program</span><br><span class="line">           (append</span><br><span class="line">            browse-url-firefox-arguments</span><br><span class="line">            (if (browse-url-maybe-new-window new-window)</span><br><span class="line">		(if browse-url-firefox-new-window-is-tab</span><br><span class="line">		    &#39;(&quot;-new-tab&quot;)</span><br><span class="line">		  &#39;(&quot;-new-window&quot;)))</span><br><span class="line">            (list url)))))</span><br></pre></td></tr></table></figure></code></pre><p>这样就大功告成了！<br>Happy Hacking<br><img src="/.com//a.png"></p>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">(defcustom browse-url-firefox-dev-program</span><br><span class="line">  (let ((candidates &#39;(&quot;icecat&quot; &quot;iceweasel&quot; &quot;firefox-developer-edition&quot;)))</span><br><span class="line">    (while (and candidates (not (executable-find (car candidates))))</span><br><span class="line">      (setq candidates (cdr candidates)))</span><br><span class="line">    (or (car candidates) &quot;firefox-developer-edition&quot;))</span><br><span class="line">  &quot;The name by which to invoke Firefox-dev or a variant of it.&quot;</span><br><span class="line">  :type &#39;string)</span><br><span class="line"></span><br><span class="line">(defun browse-url-firefox-dev (url &amp;optional new-window)</span><br><span class="line">  (interactive (browse-url-interactive-arg &quot;URL: &quot;))</span><br><span class="line">  (setq url (browse-url-encode-url url))</span><br><span class="line">  (let* ((process-environment (browse-url-process-environment)))</span><br><span class="line">    (apply &#39;start-process</span><br><span class="line">           (concat &quot;firefox-developer-edition &quot; url) nil</span><br><span class="line">           browse-url-firefox-dev-program</span><br><span class="line">           (append</span><br><span class="line">            browse-url-firefox-arguments</span><br><span class="line">            (if (browse-url-maybe-new-window new-window)</span><br><span class="line">		(if browse-url-firefox-new-window-is-tab</span><br><span class="line">		    &#39;(&quot;-new-tab&quot;)</span><br><span class="line">		  &#39;(&quot;-new-window&quot;)))</span><br><span class="line">            (list url)))))</span><br></pre></td></tr></table></figure></code></pre><p>这样就大功告成了！<br>Happy Hacking  </p>
+<p><img src="/2020/03/29/emacs-web/a.png" alt="ok"></p>
 
             </div>
           
@@ -245,6 +248,8 @@
 
 
     
+  
+
 
 
 
@@ -253,6 +258,8 @@
     <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
   
 
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
   
 
     <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
