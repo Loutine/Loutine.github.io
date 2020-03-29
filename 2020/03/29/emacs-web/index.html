@@ -12,7 +12,7 @@
 
 
 
-  <meta name="description" content="<img src="/2020/03/29/emacs-web/a.png" >"/>
+  <meta name="description" content="emacs构建前端开发环境并添加firefox-dev支持"/>
 
 
 
@@ -41,8 +41,9 @@
 <meta property="og:site_name" content="Anti-Bone-Chick">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/03/29/emacs-web/a.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/29/emacs-web/a.png">
 <meta property="article:published_time" content="2020-03-29T11:34:28.000Z">
-<meta property="article:modified_time" content="2020-03-29T13:36:08.222Z">
+<meta property="article:modified_time" content="2020-03-29T13:49:59.289Z">
 <meta property="article:author" content="Loutine">
 <meta property="article:tag" content="emacs">
 <meta property="article:tag" content="前端">
@@ -147,20 +148,31 @@
     
 	    
   <div class="toc-container">
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#起因"><span class="toc-text">起因</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HTML与CSS–web-mode"><span class="toc-text">HTML与CSS–web mode</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#javascript–补全与设置"><span class="toc-text">javascript–补全与设置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#skewer踩坑"><span class="toc-text">skewer踩坑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#impatient-mode-的问题"><span class="toc-text">impatient mode 的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更好的选择–browser-sync"><span class="toc-text">更好的选择–browser-sync</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lsp-补全"><span class="toc-text">lsp-补全</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#添加firefox-developer-edition支持，并设置为默认浏览器"><span class="toc-text">添加firefox-developer-edition支持，并设置为默认浏览器</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#impatient-mode-的问题"><span class="toc-text">impatient mode 的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#更好的选择–browser-sync"><span class="toc-text">更好的选择–browser-sync</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lsp-补全"><span class="toc-text">lsp-补全</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#添加firefox-developer-edition支持，并设置为默认浏览器"><span class="toc-text">添加firefox-developer-edition支持，并设置为默认浏览器</span></a>
   </div> 
 	
             <div class="post-content">
-            <h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>最近对javascript的函数式语法产生了兴趣，决定学习一下<br>学习js难免要和前端打交道，目前好用的前端编辑器有很多，sublime，vsc，atom，vim都是很不错的选择，但是对于一个常年使用emacs的用户来说，总觉得小拇指不有点不适应，花了半天的时间参考了一些配置，做了一个有基本功能的开发环境。  </p>
-<h1 id="HTML与CSS–web-mode"><a href="#HTML与CSS–web-mode" class="headerlink" title="HTML与CSS–web mode"></a>HTML与CSS–web mode</h1><p>  html文件和css的配置并不复杂，并且有很好的工具，web-mode基本上就是开箱即用很方便，而且支持目前大部分主流的模板文件还有css格式，相关配置如下，力求最小化配置，如果有需要可以阅读官网的document进行一些个性化配置。<a href="http://web-mode.org/" target="_blank" rel="noopener">web-mode</a></p>
+            <div class="post-excerpt post-content">
+    <img src="/2020/03/29/emacs-web/a.png">
+</div>
+<a id="more"></a>
+# 起因
+最近对javascript的函数式语法产生了兴趣，决定学习一下  
+学习js难免要和前端打交道，目前好用的前端编辑器有很多，sublime，vsc，atom，vim都是很不错的选择，但是对于一个常年使用emacs的用户来说，总觉得小拇指不有点不适应，花了半天的时间参考了一些配置，做了一个有基本功能的开发环境。  
+# HTML与CSS--web mode
+  html文件和css的配置并不复杂，并且有很好的工具，web-mode基本上就是开箱即用很方便，而且支持目前大部分主流的模板文件还有css格式，相关配置如下，力求最小化配置，如果有需要可以阅读官网的document进行一些个性化配置。[web-mode](http://web-mode.org/)
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">(use-package web-mode</span><br><span class="line">  :ensure t</span><br><span class="line">  :mode &quot;\\.[px]?html?\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.\\(?:tpl\\|blade\\)\\(?:\\.php\\)?\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.erb\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.eex\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.jsp\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.as[cp]x\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.hbs\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.mustache\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.svelte\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.vue\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.twig\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.jinja\\&#39;&quot;</span><br><span class="line">  :mode &quot;wp-content&#x2F;themes&#x2F;.+&#x2F;.+\\.php\\&#39;&quot;</span><br><span class="line">  :mode &quot;templates&#x2F;.+\\.php\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.tsx\\&#39;&quot;</span><br><span class="line">  :mode &quot;\\.swig\\&#39;&quot;</span><br><span class="line">  :config</span><br><span class="line">  (setq web-mode-markup-indent-offset 2</span><br><span class="line">	web-mode-css-indent-offset 2</span><br><span class="line">	web-mode-code-indent-offset 2</span><br><span class="line">	web-mode-enable-current-element-highlight t;对光标所在的元素进行高亮提示</span><br><span class="line">	web-mode-enable-css-colorization t);css色彩显示</span><br><span class="line">	)</span><br></pre></td></tr></table></figure>
-<p>如果你需要自动补全可以使用company-web,虽然我觉得并没有什么必要</p>
-<h1 id="javascript–补全与设置"><a href="#javascript–补全与设置" class="headerlink" title="javascript–补全与设置"></a>javascript–补全与设置</h1><h2 id="skewer踩坑"><a href="#skewer踩坑" class="headerlink" title="skewer踩坑"></a>skewer踩坑</h2><p>  最早在google上搜索的时候，推荐给我的是skewer-mode，这个插件看起来十分诱人，但其实有着很大的缺陷</p>
-<ol>
-<li>已经维护较少<br>最近的更新是在8个月以前，对于前端技术来说一个已经很不活跃了，相关项目下的issue也没有人解决。</li>
-<li>奇怪的bug<br>其卖点live develop功能在尝试后发现有重大缺陷，html文件不能预览，甚至连基本的tag都无法执行。</li>
-<li>过于臃肿<br>这个问题已经是一个老问题了，社区的反映也很多，许多emacs配置已经放弃了这个包。  </li>
-</ol>
+如果你需要自动补全可以使用company-web,虽然我觉得并没有什么必要
+# javascript--补全与设置
+## skewer踩坑
+  最早在google上搜索的时候，推荐给我的是skewer-mode，这个插件看起来十分诱人，但其实有着很大的缺陷
+  1. 已经维护较少
+  最近的更新是在8个月以前，对于前端技术来说一个已经很不活跃了，相关项目下的issue也没有人解决。
+  2. 奇怪的bug
+  其卖点live develop功能在尝试后发现有重大缺陷，html文件不能预览，甚至连基本的tag都无法执行。
+  3. 过于臃肿
+  这个问题已经是一个老问题了，社区的反映也很多，许多emacs配置已经放弃了这个包。  
+
 <h2 id="impatient-mode-的问题"><a href="#impatient-mode-的问题" class="headerlink" title="impatient mode 的问题"></a>impatient mode 的问题</h2><p>  skewer-mode的作者有另一个包用于html预览–impatient-mode<br>  这个mode同样很诱人，能够直接实时预览你的html文件，甚至不用保存，十分诱人性能也好但是有一个问题，html中如果有js文件包含，当js文件修改的时候并不能刷新页面，我是个懒人，这么费尽的事情我当然不愿意做，所以才有下面的内容。  </p>
 <h2 id="更好的选择–browser-sync"><a href="#更好的选择–browser-sync" class="headerlink" title="更好的选择–browser-sync"></a>更好的选择–browser-sync</h2><p>  实际上在我一番探索后，emacs内部并没有很好的解决方案，几次搜索之后看上了这个有趣的项目<a href="http://www.browsersync.cn/" target="_blank" rel="noopener">browser-sync</a>尝试之后发现这个包的确好用。安装过程也很简单。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g browser-sync</span><br></pre></td></tr></table></figure>
