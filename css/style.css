@@ -886,6 +886,16 @@ h6 {
   opacity: .6;
   top: -0.5em; }
 
+.widget_friend .friend-list-item {
+  padding: 0 10px 7px 0;
+  font-size: 14px;
+  text-transform: uppercase;
+  border: 1px solid #fff;
+  display: inline-block;
+  background: #fff; }
+  .widget_friend .friend-list-item .friend-list-link {
+    color: rgba(0, 0, 0, 0.6); }
+
 .footer {
   margin-top: 2em; }
 
