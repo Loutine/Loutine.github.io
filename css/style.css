@@ -840,6 +840,8 @@ h6 {
   color: rgba(0, 0, 0, 0.6); }
   #secondary ol, #secondary ul {
     list-style: none; }
+  #secondary a:hover {
+    color: #5cffff; }
 
 .widget-area {
   font-size: 14px; }
