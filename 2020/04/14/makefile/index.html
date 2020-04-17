@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,minimum-scale=1,maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="description" content="Makefile 学习笔记"/>
+
+
+
+
+  <meta name="keywords" content="C++,Linux,工程管理," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Anti-Bone-Chick">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=1.1" />
+
+
+
+<link rel="canonical" href="http://yoursite.com/2020/04/14/makefile/"/>
+
+
+<meta name="description" content="一般工程项目的编译流程编译首先要把源文件编译成中间代码文件，在Windows下也就是.obj文件，UNIX下是.o文件。 链接将ObjectFile合成执行文件，有时中间目标过多，中间项目需要显式指定中间目标的文件名，很不方便，需要打包为库文件Linux下为.a, Windows下为.lib。 Makefile语法基本语法12target...:prerequisites...	command 注">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Makefile 学习笔记">
+<meta property="og:url" content="http://yoursite.com/2020/04/14/makefile/index.html">
+<meta property="og:site_name" content="Anti-Bone-Chick">
+<meta property="og:description" content="一般工程项目的编译流程编译首先要把源文件编译成中间代码文件，在Windows下也就是.obj文件，UNIX下是.o文件。 链接将ObjectFile合成执行文件，有时中间目标过多，中间项目需要显式指定中间目标的文件名，很不方便，需要打包为库文件Linux下为.a, Windows下为.lib。 Makefile语法基本语法12target...:prerequisites...	command 注">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-14T13:28:52.000Z">
+<meta property="article:modified_time" content="2020-04-17T03:37:56.849Z">
+<meta property="article:author" content="Loutine">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="工程管理">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=1.1" />
+<link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet'>
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css" />
+
+
+
+
+<script type="text/javascript">
+  var themeConfig = {
+    fancybox: {
+      enable: true
+    },
+  };
+</script>
+
+
+
+
+  
+
+
+
+    <title> Makefile 学习笔记 - Anti-Bone-Chick </title>
+  <meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/atom.xml" title="Anti-Bone-Chick" type="application/atom+xml">
+</head>
+
+  <body>
+    <div id="page">
+      <header id="masthead"><div class="site-header-inner">
+    <h1 class="site-title">
+        <a href="/." class="logo">
+	<img width=40 height=40 src="/favicon.ico"/>
+	Anti-Bone-Chick
+	</a>
+    </h1>
+
+    <nav id="nav-top">
+        
+            <ul id="menu-top" class="nav-top-items">
+                
+                    <li class="menu-item">
+                        <a href="/archives">
+                            
+                            
+                                Archives
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/about">
+                            
+                            
+                                About
+                            
+                        </a>
+                    </li>
+                
+                    <li class="menu-item">
+                        <a href="/atom.xml">
+                            
+                            
+                                RSS
+                            
+                        </a>
+                    </li>
+                
+            </ul>
+        
+  </nav>
+</div>
+
+      </header>
+      <div id="content">
+        
+    <div id="primary">
+        
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Makefile 学习笔记
+        
+      </h1>
+
+      <time class="post-time">
+          Apr 14 2020
+      </time>
+    </header>
+
+
+
+    
+	    
+  <div class="toc-container">
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#一般工程项目的编译流程"><span class="toc-text">一般工程项目的编译流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#编译"><span class="toc-text">编译</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链接"><span class="toc-text">链接</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Makefile语法"><span class="toc-text">Makefile语法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本语法"><span class="toc-text">基本语法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用变量"><span class="toc-text">使用变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#模式变量与目标变量"><span class="toc-text">模式变量与目标变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多种赋值语句"><span class="toc-text">多种赋值语句</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#"><span class="toc-text">:&#x3D;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-1"><span class="toc-text">?&#x3D;</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#-2"><span class="toc-text">+&#x3D;</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#advanced-高级变量用法"><span class="toc-text">(advanced)高级变量用法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#变量替换"><span class="toc-text">变量替换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#变量嵌套"><span class="toc-text">变量嵌套</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#变量拼接"><span class="toc-text">变量拼接</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Make嵌套执行与变量传递"><span class="toc-text">Make嵌套执行与变量传递</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自动推导"><span class="toc-text">自动推导</span></a></li></ol></li></ol>
+  </div> 
+	
+            <div class="post-content">
+            <h1 id="一般工程项目的编译流程"><a href="#一般工程项目的编译流程" class="headerlink" title="一般工程项目的编译流程"></a>一般工程项目的编译流程</h1><h2 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h2><p>首先要把源文件编译成中间代码文件，在Windows下也就是.obj文件，UNIX下是.o文件。</p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p>将ObjectFile合成执行文件，有时中间目标过多，中间项目需要显式指定中间目标的文件名，很不方便，需要打包为库文件<br>Linux下为.a, Windows下为.lib。</p>
+<h1 id="Makefile语法"><a href="#Makefile语法" class="headerlink" title="Makefile语法"></a>Makefile语法</h1><h2 id="基本语法"><a href="#基本语法" class="headerlink" title="基本语法"></a>基本语法</h2><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">target...:prerequisites...</span></span><br><span class="line">	command</span><br></pre></td></tr></table></figure>
+<p>注意，command前有Tab，否则无法执行命令<br>target为目标<br>一般make会显示当前执行的命令，如果希望disable一个command，在前面加上@</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@echo <span class="string">"........."</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用变量"><a href="#使用变量" class="headerlink" title="使用变量"></a>使用变量</h2><p>定义变量的方法与C++中定义宏的方法类似(原理也类似)<br>使用$调用定义的变量</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OBJECT=main.cpp myvector.cpp</span><br><span class="line"><span class="section">execute: <span class="variable">$(OBJECT)</span></span></span><br><span class="line">	command</span><br></pre></td></tr></table></figure>
+<p>同时Makefile支持通配符(*?) </p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">excute: *.cpp</span></span><br><span class="line">	command</span><br></pre></td></tr></table></figure>
+<p>但是注意变量中如果有通配符,编译时不会展开，会当作字符处理</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ERR=*.cpp</span><br><span class="line">CC = g++</span><br><span class="line">CPPFLAG = -Wall -g -std=c++11</span><br><span class="line"><span class="section">target:<span class="variable">$(ERR)</span></span></span><br><span class="line">	<span class="variable">$(CC)</span> <span class="variable">$(CPPFLAG)</span> <span class="variable">$(ERR)</span> -o target</span><br></pre></td></tr></table></figure>
+<p>这里会直接编译一个名为*.cpp的文件导致报错</p>
+<h3 id="模式变量与目标变量"><a href="#模式变量与目标变量" class="headerlink" title="模式变量与目标变量"></a>模式变量与目标变量</h3><p>对于特定匹配的模式使用不同的变量值</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">prog : CFLAGS = -g</span><br><span class="line">prog : prog.o foo.o bar.o</span><br><span class="line">        <span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> prog.o foo.o bar.o</span><br><span class="line"></span><br><span class="line">prog.o : prog.c</span><br><span class="line">        <span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> prog.c</span><br><span class="line"></span><br><span class="line">foo.o : foo.c</span><br><span class="line">        <span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> foo.c</span><br><span class="line"></span><br><span class="line">bar.o : bar.c</span><br><span class="line">        <span class="variable">$(CC)</span> <span class="variable">$(CFLAGS)</span> bar.c</span><br></pre></td></tr></table></figure>
+<p>模式变量更为泛化</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%.o : CFLAGS = -O</span><br></pre></td></tr></table></figure>
+<h3 id="多种赋值语句"><a href="#多种赋值语句" class="headerlink" title="多种赋值语句"></a>多种赋值语句</h3><h4 id><a href="#" class="headerlink" title=":="></a>:=</h4><p>  循环定义会使得文件发生错误<br>  <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">A = <span class="variable">$(B)</span></span><br><span class="line">B = <span class="variable">$(A)</span></span><br></pre></td></tr></table></figure><br>  如果想要覆盖定义，使用<code>:=</code>符号 来定义<br>  <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x := foo</span><br><span class="line">y := <span class="variable">$(x)</span> bar</span><br><span class="line">x := later</span><br></pre></td></tr></table></figure><br>  该方法定义的变量只能调用在语句之前定义的变量，从而避免紊乱</p>
+<h4 id="-1"><a href="#-1" class="headerlink" title="?="></a>?=</h4><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A ?= B</span><br></pre></td></tr></table></figure>
+<p>这个定义的方法含义为：如果A没有被定义，那么定义A=B</p>
+<h4 id="-2"><a href="#-2" class="headerlink" title="+="></a>+=</h4><p>如果变量之前没有定义过，那么，“+=”会自动变成“=”，如果前面有变量定义，那么“+=”会继承于前次操作的赋值符。如果前一次的是“:=”，那么“+=”会以“:=”作为其赋值符，如： </p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">variable := value</span><br><span class="line">variable += more</span><br></pre></td></tr></table></figure>
+<p>此时variable = variable more</p>
+<h3 id="advanced-高级变量用法"><a href="#advanced-高级变量用法" class="headerlink" title="(advanced)高级变量用法"></a>(advanced)高级变量用法</h3><h4 id="变量替换"><a href="#变量替换" class="headerlink" title="变量替换"></a>变量替换</h4><p>  语法<code>$(var:a=b)</code>或者<code>${var:a=b}</code>替换var中以a <code>结尾</code> 的词组将a替换为b<br>  <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">foo := a.o b.o c.o</span><br><span class="line">bar := $(foo:.o=.c)</span><br></pre></td></tr></table></figure><br>  bar = a.c b.c c.c</p>
+<h4 id="变量嵌套"><a href="#变量嵌套" class="headerlink" title="变量嵌套"></a>变量嵌套</h4><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">x = y</span><br><span class="line">y = z</span><br><span class="line">z = u</span><br><span class="line">a := $($(<span class="variable">$(x)</span>))</span><br></pre></td></tr></table></figure>
+<p>简单特性，不多言<br>显然a = u</p>
+<h4 id="变量拼接"><a href="#变量拼接" class="headerlink" title="变量拼接"></a>变量拼接</h4><p>形式$(a)&lt;expr&gt;</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a = first</span><br><span class="line">b = second</span><br><span class="line">all = $a_$b</span><br></pre></td></tr></table></figure>
+<p>由于变量本身是宏，同样很好推导<br>all = first_second</p>
+<h2 id="Make嵌套执行与变量传递"><a href="#Make嵌套执行与变量传递" class="headerlink" title="Make嵌套执行与变量传递"></a>Make嵌套执行与变量传递</h2><p>大型项目中，我们会把我们不同模块或是不同功能的源文件放在不同的目录中，我们可以在每个目录中都书写一个该目录的Makefile，这有利于让我们的Makefile变得更加地简洁</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">subpro:</span></span><br><span class="line">	cd subproj &amp;&amp; <span class="variable">$(MAKE)</span></span><br></pre></td></tr></table></figure>
+<p>该方法与下述方法等价</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">subpro:</span></span><br><span class="line">	<span class="variable">$(MAKE)</span> -C subproj</span><br></pre></td></tr></table></figure>
+<p>同时如果希望子项目的makefile继承变量，使用一下语法</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> &lt;var&gt;</span><br></pre></td></tr></table></figure>
+<p>或者在定义完全部后使用</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;var1&gt;</span><br><span class="line">&lt;var2&gt;</span><br><span class="line"><span class="keyword">export</span></span><br></pre></td></tr></table></figure>
+<p>如果不许要继承</p>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unexport</span> &lt;var&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="自动推导"><a href="#自动推导" class="headerlink" title="自动推导"></a>自动推导</h2>
+            </div>
+          
+
+    
+      <footer class="post-footer">
+		
+		<div class="post-tags">
+		  
+			<a href="/tags/C/">C++</a>
+		  
+			<a href="/tags/Linux/">Linux</a>
+		  
+			<a href="/tags/%E5%B7%A5%E7%A8%8B%E7%AE%A1%E7%90%86/">工程管理</a>
+		  
+		</div>
+		
+
+        
+        
+  <nav class="post-nav">
+    
+    
+      <a class="next" href="/2020/03/29/emacs-web/">
+        <span class="next-text nav-default">emacs构建前端开发环境并添加firefox-dev支持</span>
+        <span class="prev-text nav-mobile">Next</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+        
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+      </footer>
+    
+  </article>
+
+    </div>
+
+      </div>
+
+      <footer id="colophon"><span class="copyright-year">
+    
+        &copy;
+    
+    2020
+    <span class="footer-author">Loutine.</span>
+    <span class="power-by">
+        Powered by <a class="hexo-link" href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> and <a class="theme-link" href="https://github.com/frostfan/hexo-theme-polarbear" target="_blank" rel="noopener">Polar Bear</a>
+    </span>
+</span>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+    
+
+
+    
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery-3.1.1.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+    <script type="text/javascript" src="/js/src/theme.js?v=1.1"></script>
+<script type="text/javascript" src="/js/src/bootstrap.js?v=1.1"></script>
+
+  </body>
+</html>
