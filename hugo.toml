@@ -1,0 +1,4 @@
+baseURL = 'https://Loutine.github.io/'
+languageCode = 'en-us'
+title = 'Anti-Bone-Chick'
+theme = 'hugo-theme-nostyleplease'

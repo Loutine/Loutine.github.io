@@ -1,0 +1,5 @@
+<ul>
+  {{ range $tag := site.Taxonomies.tags }}
+  <li>({{ $tag.Count }}) <a href="{{ $tag.Page.Permalink }}">{{ $tag.Page.Title }}</a></li>
+  {{ end }}
+</ul>
